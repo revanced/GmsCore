@@ -24,6 +24,8 @@ android {
         versionName version
         minSdkVersion androidMinSdk
         targetSdkVersion androidTargetSdk
+
+        buildConfigField "String", "GMS_APPLICATION_NAMESPACE", "\"$applicationNamespace\""
     }
 
     compileOptions {

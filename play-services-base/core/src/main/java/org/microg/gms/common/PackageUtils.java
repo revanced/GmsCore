@@ -28,13 +28,14 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import org.microg.gms.base.core.BuildConfig;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
@@ -49,8 +50,7 @@ public class PackageUtils {
     private static final String GOOGLE_LEGACY_KEY = "58e1c4133f7441ec3d2c270270a14802da47ba0e"; // Seems to be no longer used.
     private static final String[] GOOGLE_PRIMARY_KEYS = {GOOGLE_PLATFORM_KEY, GOOGLE_PLATFORM_KEY_2, GOOGLE_APP_KEY};
 
-    private static final Map<String, String> KNOWN_GOOGLE_PACKAGES;
-
+    public static final Map<String, String> KNOWN_GOOGLE_PACKAGES;
     static {
         KNOWN_GOOGLE_PACKAGES = new HashMap<>();
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.classroom", "46f6c8987311e131f4f558d8e0ae145bebab6da3");
@@ -60,6 +60,7 @@ public class PackageUtils {
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.tycho", "01b844184e360686aa98b48eb16e05c76d4a72ad");
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.contacts", "ee3e2b5d95365c5a1ccc2d8dfe48d94eb33b3ebe");
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.wearable.app", "a197f9212f2fed64f0ff9c2a4edf24b9c8801c8c");
+        KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.youtube", "24bb24c05e47e0aefa68a58a766179d9b613a600");
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.youtube.music", "afb0fed5eeaebdd86f56a97742f4b6b33ef59875");
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.vr.home", "fc1edc68f7e3e4963c998e95fc38f3de8d1bfc96");
         KNOWN_GOOGLE_PACKAGES.put("com.google.vr.cyclops", "188c5ca3863fa121216157a5baa80755ceda70ab");
@@ -79,6 +80,9 @@ public class PackageUtils {
 
     public static boolean isGooglePackage(Context context, String packageName) {
         String signatureDigest = firstSignatureDigest(context, packageName);
+
+        packageName = PackageSpoofUtils.spoofPackageName(context.getPackageManager(), packageName);
+
         return isGooglePackage(packageName, signatureDigest);
     }
 
@@ -111,7 +115,7 @@ public class PackageUtils {
                     return true;
             }
         }
-        return context.checkCallingPermission("org.microg.gms.EXTENDED_ACCESS") == PackageManager.PERMISSION_GRANTED;
+        return context.checkCallingPermission(BuildConfig.BASE_PACKAGE_NAME + ".gms.EXTENDED_ACCESS") == PackageManager.PERMISSION_GRANTED;
     }
 
     public static void checkPackageUid(Context context, String packageName, int callingUid) {
@@ -129,16 +133,20 @@ public class PackageUtils {
         try {
             info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
         } catch (PackageManager.NameNotFoundException e) {
-            return null;
+            // In the case the package name is changed, but the original package name is used,
+            // try to get the digest for the real package name.
+            return KNOWN_GOOGLE_PACKAGES.get(packageName);
         }
+
         if (info != null && info.signatures != null && info.signatures.length > 0) {
             for (Signature sig : info.signatures) {
                 String digest = sha1sum(sig.toByteArray());
                 if (digest != null) {
-                    return digest;
+                    return PackageSpoofUtils.spoofStringSignature(packageManager, packageName, digest);
                 }
             }
         }
+
         return null;
     }
 
@@ -159,7 +167,8 @@ public class PackageUtils {
             for (Signature sig : info.signatures) {
                 byte[] digest = sha1bytes(sig.toByteArray());
                 if (digest != null) {
-                    return digest;
+                    // spoof or use real one
+                    return PackageSpoofUtils.spoofBytesSignature(packageManager, packageName, digest);
                 }
             }
         }
@@ -173,7 +182,9 @@ public class PackageUtils {
         if (packageName == null) {
             packageName = firstPackageFromUserId(context, callingUid);
         }
-        return packageName;
+
+        // spoof or use real one
+        return PackageSpoofUtils.spoofPackageName(context.getPackageManager(), packageName);
     }
 
     @Nullable
@@ -238,7 +249,9 @@ public class PackageUtils {
         if (packageName != null && suggestedPackageName != null && !packageName.equals(suggestedPackageName)) {
             throw new SecurityException("UID [" + callingUid + "] is not related to packageName [" + suggestedPackageName + "] (seems to be " + packageName + ")");
         }
-        return packageName;
+
+        // spoof or use real one
+        return PackageSpoofUtils.spoofPackageName(context.getPackageManager(), packageName);
     }
 
     @Nullable

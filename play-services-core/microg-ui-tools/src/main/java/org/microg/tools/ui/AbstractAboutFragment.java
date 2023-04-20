@@ -78,7 +78,7 @@ public abstract class AbstractAboutFragment extends Fragment {
     }
 
     public static String getSelfVersion(Context context) {
-        return getLibVersion(context.getPackageName());
+        return getLibVersion(BuildConfig.GMS_APPLICATION_NAMESPACE);
     }
 
     protected String getSelfVersion() {

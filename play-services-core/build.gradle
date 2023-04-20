@@ -76,10 +76,14 @@ dependencies {
 }
 
 android {
+    namespace "$applicationNamespace"
+
     compileSdkVersion androidCompileSdk
     buildToolsVersion "$androidBuildVersionTools"
 
     defaultConfig {
+        applicationId "${basePackageName}.android.gms"
+
         versionName version
         versionCode appVersionCode
 
@@ -99,6 +103,20 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
+
+        buildConfigField "String", "APPLICATION_NAMESPACE", "\"${android.namespace}\""
+        buildConfigField "String", "BASE_PACKAGE_NAME", "\"$basePackageName\""
+        manifestPlaceholders = [
+                basePackageName: "$basePackageName"
+        ]
+
+        // provide package name to xml resources
+        resValue "string", "var_authenticator_account_type", "$basePackageName"
+        resValue "string", "var_contact_syncadapter_account_type", "$basePackageName"
+        resValue "string", "var_pref_auth_action_security_settings", "${basePackageName}.android.gms.accountsettings.SECURITY_SETTINGS"
+        resValue "string", "var_pref_auth_action_privacy_settings", "${basePackageName}.android.gms.accountsettings.PRIVACY_SETTINGS"
+        resValue "string", "var_pref_auth_action_preferences_settings", "${basePackageName}.android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS"
+        resValue "string", "var_pref_start_gms_package", "${basePackageName}.android.gms"
     }
 
     buildFeatures {

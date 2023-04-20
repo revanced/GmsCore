@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.framework.tracing.wrapper.TracingIntentService;
 
+import org.microg.gms.droidguard.core.BuildConfig;
 import org.microg.gms.droidguard.core.DroidGuardServiceBroker;
 import org.microg.gms.droidguard.GuardCallback;
 import org.microg.gms.droidguard.core.HandleProxyFactory;
@@ -81,7 +82,7 @@ public class DroidGuardChimeraService extends TracingIntentService {
     // handle intent
     public final void a(@Nullable Intent intent) {
         Log.d("GmsGuardChimera", "a(" + intent + ")");
-        if (intent != null && intent.getAction() != null && intent.getAction().equals("com.google.android.gms.droidguard.service.PING")) {
+        if (intent != null && intent.getAction() != null && intent.getAction().equals(BuildConfig.BASE_PACKAGE_NAME + ".android.gms.droidguard.service.PING")) {
             byte[] byteData = intent.getByteArrayExtra("data");
             if (byteData == null) {
                 int[] intData = intent.getIntArrayExtra("data");
@@ -107,7 +108,7 @@ public class DroidGuardChimeraService extends TracingIntentService {
     @Nullable
     @Override
     public final IBinder onBind(Intent intent) {
-        if (intent != null && intent.getAction() != null && intent.getAction().equals("com.google.android.gms.droidguard.service.START")) {
+        if (intent != null && intent.getAction() != null && intent.getAction().equals(BuildConfig.BASE_PACKAGE_NAME + ".android.gms.droidguard.service.START")) {
             return new DroidGuardServiceBroker(this);
         }
         return null;

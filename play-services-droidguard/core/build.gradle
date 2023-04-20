@@ -41,6 +41,11 @@ android {
         targetSdkVersion androidTargetSdk
         buildConfigField("String", "VERSION_NAME", "\"${defaultConfig.versionName}\"")
         buildConfigField("int", "VERSION_CODE", "${defaultConfig.versionCode}")
+
+        buildConfigField "String", "BASE_PACKAGE_NAME", "\"$basePackageName\""
+        manifestPlaceholders = [
+                basePackageName: "$basePackageName"
+        ]
     }
 
     sourceSets {

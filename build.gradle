@@ -4,6 +4,9 @@
  */
 
 buildscript {
+    ext.applicationNamespace = "com.google.android.gms"
+    ext.basePackageName = "com.google"
+
     ext.cronetVersion = '102.5005.125'
     ext.safeParcelVersion = '1.7.1'
     ext.wearableVersion = '0.1.1'
@@ -31,7 +34,7 @@ buildscript {
 
     ext.androidBuildGradleVersion = '7.2.1'
 
-    ext.androidBuildVersionTools = '33.0.0'
+    ext.androidBuildVersionTools = '33.0.2'
 
     ext.androidMinSdk = 14
     ext.androidTargetSdk = 29
@@ -99,7 +102,7 @@ allprojects {
 
     group = 'org.microg.gms'
     version = ourVersionName
-    ext.appVersionCode = ourVersionCode
+    ext.appVersionCode = 232115000
     ext.isReleaseVersion = false
 }
 

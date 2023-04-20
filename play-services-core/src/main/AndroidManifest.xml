@@ -15,60 +15,59 @@
   ~ limitations under the License.
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.google.android.gms">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <permission
-        android:name="com.google.android.c2dm.permission.RECEIVE"
+        android:name="${basePackageName}.android.c2dm.permission.RECEIVE"
         android:label="@string/perm_c2dm_receive_label"
         android:permissionGroup="android.permission-group.NETWORK"
         android:protectionLevel="normal" />
     <permission
-        android:name="com.google.android.c2dm.permission.SEND"
+        android:name="${basePackageName}.android.c2dm.permission.SEND"
         android:label="@string/perm_c2dm_send_label"
         android:permissionGroup="android.permission-group.NETWORK"
         android:protectionLevel="privileged|signature" />
     <permission
-        android:name="com.google.android.gtalkservice.permission.GTALK_SERVICE"
+        android:name="${basePackageName}.android.gtalkservice.permission.GTALK_SERVICE"
         android:label="@string/perm_gtalk_svc_label"
         android:permissionGroup="android.permission-group.MESSAGES"
         android:protectionLevel="signature" />
 
     <permission-tree
-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH"
+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH"
         android:icon="@drawable/proprietary_auth_ic_scope_icon_default" />
 
     <permission
-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.cp"
+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH.cp"
         android:description="@string/permission_service_cp_description"
         android:label="@string/permission_service_cp_label"
         android:protectionLevel="dangerous" />
     <permission
-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.local"
+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH.local"
         android:description="@string/permission_service_local_description"
         android:label="@string/permission_service_local_label"
         android:protectionLevel="dangerous" />
     <permission
-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.mail"
+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH.mail"
         android:description="@string/permission_service_mail_description"
         android:label="@string/permission_service_mail_label"
         android:protectionLevel="dangerous" />
     <permission
-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.writely"
+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH.writely"
         android:description="@string/permission_service_writely_description"
         android:label="@string/permission_service_writely_label"
         android:protectionLevel="dangerous" />
 
     <permission
-        android:name="org.microg.gms.STATUS_BROADCAST"
+        android:name="${basePackageName}.gms.STATUS_BROADCAST"
         android:label="@string/perm_status_broadcast_label"
         android:protectionLevel="normal" />
     <permission
-        android:name="org.microg.gms.EXTENDED_ACCESS"
+        android:name="${basePackageName}.gms.EXTENDED_ACCESS"
         android:label="@string/perm_extended_access_label"
         android:protectionLevel="dangerous" />
     <permission
-        android:name="org.microg.gms.PROVISION"
+        android:name="${basePackageName}.gms.PROVISION"
         android:description="@string/perm_provision_description"
         android:label="@string/perm_provision_label"
         android:protectionLevel="privileged|signature" />
@@ -94,9 +93,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.google.android.c2dm.permission.SEND" />
-    <uses-permission android:name="com.google.android.gtalkservice.permission.GTALK_SERVICE" />
+    <uses-permission android:name="${basePackageName}.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="${basePackageName}.android.c2dm.permission.SEND" />
+    <uses-permission android:name="${basePackageName}.android.gtalkservice.permission.GTALK_SERVICE" />
 
     <uses-permission android:name="org.microg.gms.STATUS_BROADCAST" />
 
@@ -119,7 +118,7 @@
         android:multiArch="true"
         android:theme="@style/Theme.AppCompat.DayNight">
 
-        <library android:name="com.google.android.gms" />
+        <library android:name="${basePackageName}.android.gms" />
 
         <meta-data
             android:name="fake-signature"
@@ -141,7 +140,7 @@
             android:process=":ui"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
-                <action android:name="com.google.android.gms.location.places.ui.PICK_PLACE" />
+                <action android:name="${basePackageName}.android.gms.location.places.ui.PICK_PLACE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -149,21 +148,21 @@
 
         <service android:name="org.microg.gms.places.GeoDataService">
             <intent-filter>
-                <action android:name="com.google.android.gms.location.places.GeoDataApi" />
-                <action android:name="com.google.android.gms.location.places.PlacesApi" />
+                <action android:name="${basePackageName}.android.gms.location.places.GeoDataApi" />
+                <action android:name="${basePackageName}.android.gms.location.places.PlacesApi" />
             </intent-filter>
         </service>
 
         <service android:name="org.microg.gms.places.PlaceDetectionService">
             <intent-filter>
-                <action android:name="com.google.android.gms.location.places.PlaceDetectionApi" />
+                <action android:name="${basePackageName}.android.gms.location.places.PlaceDetectionApi" />
             </intent-filter>
         </service>
 
         <service
             android:name="org.microg.gms.wearable.location.WearableLocationService">
             <intent-filter>
-                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <action android:name="${basePackageName}.android.gms.wearable.MESSAGE_RECEIVED" />
                 <data
                     android:host="*"
                     android:pathPrefix="/com/google/android/location/fused/wearable"
@@ -175,15 +174,15 @@
 
         <provider
             android:name="org.microg.gms.gservices.GServicesProvider"
-            android:authorities="com.google.android.gsf.gservices"
+            android:authorities="${basePackageName}.android.gsf.gservices"
             android:exported="true" />
         <provider
             android:name="org.microg.gms.settings.GoogleSettingsProvider"
-            android:authorities="com.google.settings"
+            android:authorities="${basePackageName}.settings"
             android:exported="true" />
         <provider
             android:name="org.microg.gms.feeds.SubscribedFeedsProvider"
-            android:authorities="subscribedfeeds"
+            android:authorities="${basePackageName}.subscribedfeeds"
             android:exported="true"
             android:multiprocess="false"
             android:readPermission="android.permission.SUBSCRIBED_FEEDS_READ"
@@ -208,15 +207,16 @@
                 <action android:name="android.intent.action.PACKAGE_RESTARTED" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="${basePackageName}.android.c2dm.intent.RECEIVE" />
 
                 <category android:name="android.server.checkin.CHECKIN" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.provider.Telephony.SECRET_CODE" />
 
+                <!-- *#*#MGCHECKIN#*#* -->
                 <data
-                    android:host="2432546"
+                    android:host="642432546"
                     android:scheme="android_secret_code" />
             </intent-filter>
         </receiver>
@@ -226,8 +226,8 @@
             android:name="org.microg.gms.gcm.PushRegisterService"
             android:process=":persistent">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTER" />
-                <action android:name="com.google.android.c2dm.intent.UNREGISTER" />
+                <action android:name="${basePackageName}.android.c2dm.intent.REGISTER" />
+                <action android:name="${basePackageName}.android.c2dm.intent.UNREGISTER" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -237,7 +237,7 @@
             android:name="org.microg.gms.gcm.PushRegisterReceiver"
             android:process=":persistent">
             <intent-filter>
-                <action android:name="com.google.iid.TOKEN_REQUEST" />
+                <action android:name="${basePackageName}.iid.TOKEN_REQUEST" />
             </intent-filter>
         </receiver>
 
@@ -249,7 +249,7 @@
             android:name="org.microg.gms.gcm.SendReceiver"
             android:process=":persistent">
             <intent-filter>
-                <action android:name="com.google.android.gcm.intent.SEND" />
+                <action android:name="${basePackageName}.android.gcm.intent.SEND" />
             </intent-filter>
         </receiver>
 
@@ -296,7 +296,7 @@
 
         <service android:name="org.microg.gms.car.CarService">
             <intent-filter>
-                <action android:name="com.google.android.gms.car.service.START" />
+                <action android:name="${basePackageName}.android.gms.car.service.START" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -306,7 +306,7 @@
 
         <service android:name="org.microg.gms.people.PeopleService">
             <intent-filter>
-                <action android:name="com.google.android.gms.people.service.START" />
+                <action android:name="${basePackageName}.android.gms.people.service.START" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -327,7 +327,7 @@
 
         <service android:name="org.microg.gms.wearable.WearableService">
             <intent-filter>
-                <action android:name="com.google.android.gms.wearable.BIND" />
+                <action android:name="${basePackageName}.android.gms.wearable.BIND" />
             </intent-filter>
         </service>
 
@@ -338,7 +338,7 @@
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.google.android.gsf.action.GET_GLS" />
+                <action android:name="${basePackageName}.android.gsf.action.GET_GLS" />
             </intent-filter>
 
             <meta-data
@@ -355,7 +355,7 @@
             android:exported="true"
             android:process=":ui">
             <intent-filter>
-                <action android:name="com.google.android.gms.common.account.CHOOSE_ACCOUNT" />
+                <action android:name="${basePackageName}.android.gms.common.account.CHOOSE_ACCOUNT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -368,7 +368,7 @@
             android:process=":ui"
             android:theme="@style/Theme.LoginBlue">
             <intent-filter>
-                <action android:name="com.google.android.gms.auth.login.LOGIN" />
+                <action android:name="${basePackageName}.android.gms.auth.login.LOGIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -392,33 +392,33 @@
 
         <provider
             android:name="org.microg.gms.auth.AccountContentProvider"
-            android:authorities="com.google.android.gms.auth.accounts"
+            android:authorities="${basePackageName}.android.gms.auth.accounts"
             android:exported="true" />
 
         <activity
             android:name="org.microg.gms.auth.credentials.CredentialPickerActivity"
             android:process=":ui">
             <intent-filter>
-                <action android:name="com.google.android.gms.auth.api.credentials.PICKER" />
+                <action android:name="${basePackageName}.android.gms.auth.api.credentials.PICKER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <service android:name="org.microg.gms.auth.credentials.CredentialsService">
             <intent-filter>
-                <action android:name="com.google.android.gms.auth.api.credentials.service.START" />
+                <action android:name="${basePackageName}.android.gms.auth.api.credentials.service.START" />
             </intent-filter>
         </service>
 
         <service android:name="org.microg.gms.auth.proxy.AuthProxyService">
             <intent-filter>
-                <action android:name="com.google.android.gms.auth.service.START" />
+                <action android:name="${basePackageName}.android.gms.auth.service.START" />
             </intent-filter>
         </service>
 
         <service android:name="org.microg.gms.auth.appcert.AppCertService">
             <intent-filter>
-                <action android:name="com.google.android.gms.auth.be.appcert.AppCertService" />
+                <action android:name="${basePackageName}.android.gms.auth.be.appcert.AppCertService" />
             </intent-filter>
         </service>
 
@@ -426,7 +426,7 @@
 
         <service android:name="org.microg.gms.games.GamesStubService">
             <intent-filter>
-                <action android:name="com.google.android.gms.games.service.START" />
+                <action android:name="${basePackageName}.android.gms.games.service.START" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
@@ -436,7 +436,7 @@
             android:process=":ui"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog">
             <intent-filter>
-                <action android:name="com.google.android.gms.games.PLAY_GAMES_UPGRADE" />
+                <action android:name="${basePackageName}.android.gms.games.PLAY_GAMES_UPGRADE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -444,13 +444,13 @@
         <!-- Chimera -->
         <provider
             android:name="org.microg.gms.chimera.ServiceProvider"
-            android:authorities="com.google.android.gms.chimera"
+            android:authorities="${basePackageName}.android.gms.chimera"
             android:exported="true" />
 
         <!-- Fonts -->
         <provider
             android:name="org.microg.gms.fonts.FontsProvider"
-            android:authorities="com.google.android.gms.fonts"
+            android:authorities="${basePackageName}.android.gms.fonts"
             android:exported="true" />
 
         <!-- microG Settings shown in Launcher -->
@@ -560,12 +560,12 @@
 
         <provider
             android:name="org.microg.gms.phenotype.ConfigurationProvider"
-            android:authorities="com.google.android.gms.phenotype"
+            android:authorities="${basePackageName}.android.gms.phenotype"
             android:exported="true" />
 
         <service android:name="org.microg.gms.phenotype.PhenotypeService">
             <intent-filter>
-                <action android:name="com.google.android.gms.phenotype.service.START" />
+                <action android:name="${basePackageName}.android.gms.phenotype.service.START" />
             </intent-filter>
         </service>
 
@@ -575,7 +575,7 @@
             android:name="org.microg.gms.measurement.MeasurementService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.android.gms.measurement.START" />
+                <action android:name="${basePackageName}.android.gms.measurement.START" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -36,14 +36,14 @@
                 android:name="org.microg.gms.location.manager.LocationManagerService"
                 android:exported="true">
             <intent-filter>
-                <action android:name="com.google.android.location.internal.GoogleLocationManagerService.START"/>
+                <action android:name="${basePackageName}.android.location.internal.GoogleLocationManagerService.START"/>
             </intent-filter>
         </service>
         <service android:name="org.microg.gms.location.reporting.ReportingAndroidService"
-                 android:exported="true">
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.android.location.reporting.service.START"/>
-                <action android:name="com.google.android.gms.location.reporting.service.START"/>
+                <action android:name="${basePackageName}.android.location.reporting.service.START"/>
+                <action android:name="${basePackageName}.android.gms.location.reporting.service.START"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -56,8 +56,8 @@
                 android:exported="true"
                 android:permission="android.permission.WRITE_SECURE_SETTINGS">
             <intent-filter>
-                <action android:name="com.android.location.service.v2.NetworkLocationProvider"/>
-                <action android:name="com.android.location.service.v3.NetworkLocationProvider"/>
+                <action android:name="${basePackageName}.location.service.v2.NetworkLocationProvider"/>
+                <action android:name="${basePackageName}.location.service.v3.NetworkLocationProvider"/>
             </intent-filter>
             <meta-data android:name="serviceVersion" android:value="2"/>
         </service>
@@ -66,8 +66,8 @@
                 android:exported="true"
                 android:permission="android.permission.WRITE_SECURE_SETTINGS">
             <intent-filter>
-                <action android:name="com.android.location.service.GeocodeProvider"/>
-                <action android:name="com.google.android.location.GeocodeProvider"/>
+                <action android:name="${basePackageName}.location.service.GeocodeProvider"/>
+                <action android:name="${basePackageName}.android.location.GeocodeProvider"/>
             </intent-filter>
             <meta-data android:name="serviceVersion" android:value="2"/>
         </service>

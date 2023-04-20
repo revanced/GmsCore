@@ -55,6 +55,11 @@ android {
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
+
+        buildConfigField "String", "BASE_PACKAGE_NAME", "\"$basePackageName\""
+        manifestPlaceholders = [
+                basePackageName: "$basePackageName"
+        ]
     }
 
     lintOptions {

@@ -36,6 +36,7 @@ import com.google.android.gms.wearable.internal.MessageEventParcelable;
 import com.google.android.gms.wearable.internal.NodeParcelable;
 
 import org.microg.gms.common.PublicApi;
+import org.microg.gms.wearable.BuildConfig;
 import org.microg.gms.wearable.ChannelImpl;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
 
 @PublicApi
 public abstract class WearableListenerService extends Service implements CapabilityApi.CapabilityListener, ChannelApi.ChannelListener, DataApi.DataListener, MessageApi.MessageListener, NodeApi.NodeListener {
-    private static final String BIND_LISTENER_INTENT_ACTION = "com.google.android.gms.wearable.BIND_LISTENER";
+    private static final String BIND_LISTENER_INTENT_ACTION = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.wearable.BIND_LISTENER";
     private static final String TAG = "GmsWearListenerSvc";
 
     private HandlerThread handlerThread;

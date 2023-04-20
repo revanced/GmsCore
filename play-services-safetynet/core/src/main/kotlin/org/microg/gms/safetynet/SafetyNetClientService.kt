@@ -32,6 +32,7 @@ import org.microg.gms.common.GmsService
 import org.microg.gms.common.PackageUtils
 import org.microg.gms.droidguard.core.DroidGuardPreferences
 import org.microg.gms.droidguard.core.DroidGuardResultCreator
+import org.microg.gms.safetynet.core.BuildConfig
 import org.microg.gms.settings.SettingsContract
 import org.microg.gms.settings.SettingsContract.CheckIn.getContentUri
 import org.microg.gms.settings.SettingsContract.getSettings
@@ -186,7 +187,7 @@ class SafetyNetClientServiceImpl(
             System.currentTimeMillis()
         )
 
-        val intent = Intent("org.microg.gms.safetynet.RECAPTCHA_ACTIVITY")
+        val intent = Intent(BuildConfig.BASE_PACKAGE_NAME + ".gms.safetynet.RECAPTCHA_ACTIVITY")
         intent.`package` = context.packageName
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

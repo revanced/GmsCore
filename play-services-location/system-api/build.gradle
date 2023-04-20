@@ -17,5 +17,10 @@ android {
         versionName version
         minSdkVersion androidMinSdk
         targetSdkVersion androidTargetSdk
+
+        buildConfigField "String", "BASE_PACKAGE_NAME", "\"$basePackageName\""
+        manifestPlaceholders = [
+                basePackageName: "$basePackageName"
+        ]
     }
 }
