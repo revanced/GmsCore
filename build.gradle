@@ -61,10 +61,11 @@ buildscript {
     }
 }
 
-def execResult(...args) {
+def execResult(...arguments) {
     def stdout = new ByteArrayOutputStream()
     exec {
-        commandLine args
+        executable = 'git'
+        args arguments
         standardOutput = stdout
     }
     return stdout.toString()
@@ -72,11 +73,11 @@ def execResult(...args) {
 
 def gmsVersion = "23.16.57"
 def gmsVersionCode = Integer.parseInt(gmsVersion.replaceAll('\\.', ''))
-def gitVersionBase = execResult('git', 'describe', '--tags', '--abbrev=0', '--match=v[0-9]*').trim().substring(1)
-def gitCommitCount = Integer.parseInt(execResult('git', 'rev-list', '--count', "v$gitVersionBase..HEAD").trim())
-def gitCommitId = execResult('git', 'show-ref', '--abbrev=7', '--head', 'HEAD').trim().split(' ')[0]
+def gitVersionBase = execResult('describe', '--tags', '--abbrev=0', '--match=v[0-9]*').trim().substring(1)
+def gitCommitCount = Integer.parseInt(execResult('rev-list', '--count', "v$gitVersionBase..HEAD").trim())
+def gitCommitId = execResult('show-ref', '--abbrev=7', '--head', 'HEAD').trim().split(' ')[0]
 def gitDirty = false
-execResult('git', 'status', '--porcelain').lines().each { stat ->
+execResult('status', '--porcelain').lines().each { stat ->
   def status = stat.substring(0,2)
   def file = stat.substring(3)
   if (status == '??') {

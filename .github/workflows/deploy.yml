@@ -1,0 +1,48 @@
+name: Deploy GmsCore
+
+on:
+    workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ runner.home }}/.gradle/caches
+            ${{ runner.home }}/.gradle/wrapper
+            .gradle
+            build
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      - name: Build APK
+        run: ./gradlew :play-services-core:assembleWithMapboxWithoutNearby
+
+      - name: Sign APK
+        id: sign_apk
+        uses: ilharp/sign-android-release@v1
+        with:
+          releaseDir: play-services-core/build/outputs/apk/withMapboxWithoutNearby/release/play-services-core-withMapbox-withoutNearby-release-unsigned.apk
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Parse metadata JSON
+        id: parse-metadata
+        run: |
+          echo "OUTPUT_FILE_NAME=$(jq -r '.elements[0].versionCode as $versionCode | .applicationId as $applicationId | "\($applicationId)-\($versionCode).apk"' play-services-core/build/outputs/apk/withMapboxWithoutNearby/release/output-metadata.json)" >> $GITHUB_ENV
+
+      - name: Add version to APK
+        run: mv ${{steps.sign_apk.outputs.signedFile}} ${{ env.OUTPUT_FILE_NAME }}.apk
+
+      - name: Publish release APK
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          files: ${{ env.OUTPUT_FILE_NAME }}.apk
