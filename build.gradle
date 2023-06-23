@@ -5,7 +5,7 @@
 
 buildscript {
     ext.applicationNamespace = "com.google.android.gms"
-    ext.basePackageName = "com.google"
+    ext.basePackageName = "app.revanced"
 
     ext.cronetVersion = '102.5005.125'
     ext.safeParcelVersion = '1.7.1'
