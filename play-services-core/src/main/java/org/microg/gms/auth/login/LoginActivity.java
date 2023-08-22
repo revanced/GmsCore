@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -43,7 +44,9 @@ import android.widget.TextView;
 
 import androidx.annotation.StringRes;
 import androidx.core.app.OnNewIntentProvider;
+import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewClientCompat;
+import androidx.webkit.WebViewFeature;
 
 import com.google.android.gms.R;
 
@@ -211,6 +214,13 @@ public class LoginActivity extends AssistantActivity {
         webView.setLayoutParams(new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         webView.setBackgroundColor(Color.TRANSPARENT);
+        boolean isSystemDark =
+                (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) ==
+                        Configuration.UI_MODE_NIGHT_YES;
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK))
+            WebSettingsCompat.setForceDark(webView.getSettings(),
+                    isSystemDark ? WebSettingsCompat.FORCE_DARK_ON : WebSettingsCompat.FORCE_DARK_OFF);
+
         prepareWebViewSettings(context, webView.getSettings());
         return webView;
     }
