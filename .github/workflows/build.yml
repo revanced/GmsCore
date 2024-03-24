@@ -26,6 +26,8 @@ jobs:
         uses: gradle/actions/wrapper-validation@v4
       - name: "Setup Gradle"
         uses: gradle/actions/setup-gradle@v4
+      - name: Cache Gradle
+        uses: burrunan/gradle-cache-action@v1
       - name: "Setup matchers"
         run: |
           # Setting up matchers...
