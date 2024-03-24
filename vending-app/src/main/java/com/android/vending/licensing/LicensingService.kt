@@ -10,6 +10,7 @@ import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Binder.getCallingUid
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
@@ -18,6 +19,7 @@ import com.android.vending.VendingPreferences.isLicensingEnabled
 import com.android.vending.VendingPreferences.isLicensingPurchaseFreeAppsEnabled
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.google.android.gms.base.BuildConfig
 import kotlinx.coroutines.runBlocking
 import org.microg.gms.auth.AuthConstants
 import org.microg.gms.profile.ProfileManager.ensureInitialized
@@ -212,6 +214,6 @@ class LicensingService : Service() {
         private const val KEY_V2_RESULT_JWT = "LICENSE_DATA"
 
         private val CHECKIN_SETTINGS_PROVIDER: Uri =
-            Uri.parse("content://com.google.android.gms.microg.settings/check-in")
+            Uri.parse("content://${BuildConfig.BASE_PACKAGE_NAME}.android.gms.microg.settings/check-in")
     }
 }

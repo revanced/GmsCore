@@ -44,6 +44,10 @@ android {
         buildConfigField "String", "FORCE_SHOW_BACKGROUND_PERMISSION", "\"\""
         buildConfigField "boolean", "SHOW_NOTIFICATION_WHEN_NOT_PERMITTED", "false"
         buildConfigField "boolean", "ALWAYS_LISTEN_GPS_PASSIVE", "true"
+
+        manifestPlaceholders = [
+                basePackageName: "$basePackageName"
+        ]
     }
 
     lintOptions {

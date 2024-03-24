@@ -33,7 +33,6 @@ import com.google.android.gms.common.internal.CertData;
 import org.microg.gms.auth.*;
 import org.microg.gms.auth.login.LoginActivity;
 import org.microg.gms.common.PackageUtils;
-import org.microg.gms.utils.ExtendedPackageInfo;
 import org.microg.gms.utils.PackageManagerUtilsKt;
 
 import java.util.Arrays;

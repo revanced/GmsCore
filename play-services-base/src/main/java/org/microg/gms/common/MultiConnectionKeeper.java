@@ -29,6 +29,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
 import android.os.IBinder;
 import android.util.Log;
+import com.google.android.gms.base.BuildConfig;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -43,11 +44,7 @@ import java.util.Set;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH;
-import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
-import static org.microg.gms.common.Constants.USER_MICROG_PACKAGE_NAME;
-import static org.microg.gms.common.Constants.GMS_PACKAGE_SIGNATURE_SHA1;
-import static org.microg.gms.common.Constants.GMS_SECONDARY_PACKAGE_SIGNATURE_SHA1;
-import static org.microg.gms.common.Constants.MICROG_PACKAGE_SIGNATURE_SHA1;
+import static org.microg.gms.common.Constants.*;
 
 public class MultiConnectionKeeper {
     private static final String TAG = "GmsMultiConKeeper";
@@ -298,7 +295,7 @@ public class MultiConnectionKeeper {
             if (resolveInfo == null || resolveInfo.serviceInfo == null) return false;
             if (resolveInfo.serviceInfo.name.startsWith("org.microg.")) return true;
             try {
-                PermissionInfo info = context.getPackageManager().getPermissionInfo("org.microg.gms.EXTENDED_ACCESS", 0);
+                PermissionInfo info = context.getPackageManager().getPermissionInfo(BuildConfig.BASE_PACKAGE_NAME + ".microg.gms.EXTENDED_ACCESS", 0);
                 return info.packageName.equals(resolveInfo.serviceInfo.packageName);
             } catch (PackageManager.NameNotFoundException e) {
                 return false;
