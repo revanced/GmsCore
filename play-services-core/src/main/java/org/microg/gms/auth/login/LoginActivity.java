@@ -58,6 +58,7 @@ import org.microg.gms.common.Utils;
 import org.microg.gms.people.PeopleManager;
 import org.microg.gms.profile.Build;
 import org.microg.gms.profile.ProfileManager;
+import org.microg.gms.ui.UtilsKt;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -75,6 +76,7 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT;
 import static org.microg.gms.auth.AuthPrefs.isAuthVisible;
+import static org.microg.gms.checkin.CheckinPreferences.hideLauncherIcon;
 import static org.microg.gms.common.Constants.*;
 
 public class LoginActivity extends AssistantActivity {
@@ -163,6 +165,26 @@ public class LoginActivity extends AssistantActivity {
             setNextButtonText(R.string.auth_sign_in);
         }
     }
+
+    /*
+    /* For Huawei button
+    */
+
+    // @Override
+    // protected void onHuaweiButtonClicked() {
+        // super.onHuaweiButtonClicked();
+        // state++;
+        // if (state == 1) {
+            // if (SDK_INT >= 23) {
+                // hideLauncherIcon(this, false);
+                // UtilsKt.hideIcon(this, false);
+            // }
+            // init();
+        // } else if (state == -1) {
+            // setResult(RESULT_CANCELED);
+            // finish();
+        // }
+    // }
 
     @Override
     protected void onNextButtonClicked() {

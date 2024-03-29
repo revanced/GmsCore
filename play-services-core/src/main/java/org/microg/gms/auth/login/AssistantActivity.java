@@ -40,6 +40,17 @@ public abstract class AssistantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_assistant);
         formatTitle();
+
+        /*
+        /* For Huawei button
+        */
+
+        // findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
+            // @Override
+            // public void onClick(View v) {
+                // onHuaweiButtonClicked();
+            // }
+        // });
         findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +101,14 @@ public abstract class AssistantActivity extends AppCompatActivity {
             ((Button) findViewById(R.id.back_button)).setText(text);
         }
     }
+
+    /*
+    /* For Huawei button
+    */
+
+    // protected void onHuaweiButtonClicked() {
+
+    // }
 
     protected void onNextButtonClicked() {
 

@@ -57,6 +57,11 @@
                 android:targetClass="org.microg.gms.ui.GoogleMoreFragment$AsActivity"
                 android:targetPackage="@string/var_pref_start_gms_package" />
         </Preference>
+        <SwitchPreferenceCompat
+            android:key="hideLauncherIcon"
+            android:title="@string/pref_hide_launcher_icon"
+            android:icon="@drawable/ic_hide_launcher_icon"
+            android:defaultValue="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:layout="@layout/preference_category_no_label" android:key="prefcat_other_services">
         <Preference

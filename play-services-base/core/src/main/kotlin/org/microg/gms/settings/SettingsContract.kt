@@ -35,6 +35,8 @@ object SettingsContract {
         const val VERSION_INFO = "versionInfo"
         const val DEVICE_DATA_VERSION_INFO = "deviceDataVersionInfo"
 
+        const val HIDE_LAUNCHER_ICON = "hideLauncherIcon"
+
         val PROJECTION = arrayOf(
             ENABLED,
             ANDROID_ID,
@@ -43,6 +45,7 @@ object SettingsContract {
             SECURITY_TOKEN,
             VERSION_INFO,
             DEVICE_DATA_VERSION_INFO,
+            HIDE_LAUNCHER_ICON,
         )
         const val PREFERENCES_NAME = "checkin"
         const val INITIAL_DIGEST = "1-929a0dca0eee55513280171a8585da7dcd3700f8"
