@@ -115,6 +115,7 @@
     <string name="pref_gcm_ping_interval">Интервал проверки: <xliff:g example="10 минут">%1$s</xliff:g></string>
     <string name="pref_about_title">О сервисах microG</string>
     <string name="pref_about_summary">Информация о версии и используемые библиотеки</string>
+    <string name="pref_hide_launcher_icon">Скрыть иконку из лаунчера</string>
     <string name="gcm_app_error_unregistering">Не удалось отвязать</string>
     <string name="gcm_app_not_installed_anymore">Приложение больше не установлено</string>
     <string name="gcm_unregister_app">Отвязать</string>

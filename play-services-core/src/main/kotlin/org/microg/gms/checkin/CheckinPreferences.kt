@@ -29,4 +29,11 @@ object CheckinPreferences {
         }
     }
 
+    @JvmStatic
+    fun hideLauncherIcon(context: Context, enabled: Boolean) {
+        SettingsContract.setSettings(context, CheckIn.getContentUri(context)) {
+            put(CheckIn.HIDE_LAUNCHER_ICON, enabled)
+        }
+    }
+
 }
