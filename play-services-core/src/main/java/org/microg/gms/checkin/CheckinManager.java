@@ -16,6 +16,8 @@
 
 package org.microg.gms.checkin;
 
+import static org.microg.gms.checkin.CheckinPreferences.isSpoofingEnabled;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
@@ -57,7 +59,8 @@ public class CheckinManager {
         }
         CheckinRequest request = CheckinClient.makeRequest(context,
                 new DeviceConfiguration(context), Utils.getDeviceIdentifier(context),
-                Utils.getPhoneInfo(context), info, Utils.getLocale(context), accounts);
+                Utils.getPhoneInfo(context), info, Utils.getLocale(context), accounts,
+                isSpoofingEnabled(context));
         return handleResponse(context, CheckinClient.request(request));
     }
 

@@ -62,36 +62,50 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="54dip"
-            android:background="#e4e7e9">
+            android:layout_height="54dip">
 
             <Button
                 android:id="@+id/back_button"
                 style="?attr/buttonBarNegativeButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="98dip"
                 android:layout_height="48dip"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:paddingLeft="38dp"
-                android:paddingRight="38dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:background="#e4e7e9"/>
+
+            <Button
+                android:id="@+id/spoof_button"
+                style="?attr/buttonBarPositiveButtonStyle"
+                android:layout_width="98dip"
+                android:layout_height="48dip"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@+id/next_button"
+                android:layout_marginRight="8dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="16sp"
+                android:background="#e4e7e9"/>
 
             <Button
                 android:id="@+id/next_button"
                 style="?attr/buttonBarPositiveButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="98dip"
                 android:layout_height="48dip"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:paddingLeft="38dp"
-                android:paddingRight="38dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:background="#e4e7e9"/>
         </RelativeLayout>
     </LinearLayout>
 

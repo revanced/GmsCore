@@ -46,6 +46,12 @@ public abstract class AssistantActivity extends AppCompatActivity {
                 onNextButtonClicked();
             }
         });
+        findViewById(R.id.spoof_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onHuaweiButtonClicked();
+            }
+        });
         findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +84,19 @@ public abstract class AssistantActivity extends AppCompatActivity {
         }
     }
 
+    public void setSpoofButtonText(@StringRes int res) {
+        setSpoofButtonText(getText(res));
+    }
+
+    public void setSpoofButtonText(CharSequence text) {
+        if (text == null) {
+            findViewById(R.id.spoof_button).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.spoof_button).setVisibility(View.VISIBLE);
+            ((Button) findViewById(R.id.spoof_button)).setText(text);
+        }
+    }
+
     public void setBackButtonText(@StringRes int res) {
         setBackButtonText(getText(res));
     }
@@ -92,6 +111,10 @@ public abstract class AssistantActivity extends AppCompatActivity {
     }
 
     protected void onNextButtonClicked() {
+
+    }
+
+    protected void onHuaweiButtonClicked() {
 
     }
 
