@@ -21,6 +21,7 @@ import com.google.android.gms.potokens.internal.IPoTokensService
 import com.google.android.gms.potokens.internal.ITokenCallbacks
 import org.microg.gms.BaseService
 import org.microg.gms.common.GmsService
+import org.microg.gms.common.PackageSpoofUtils
 import org.microg.gms.profile.ProfileManager
 
 const val TAG = "PoTokens"
@@ -32,7 +33,7 @@ class PoTokensService : BaseService(TAG, GmsService.POTOKENS) {
         callback.onPostInitCompleteWithConnectionInfo(
             CommonStatusCodes.SUCCESS,
             PoTokensServiceImpl(
-                applicationContext, "com.google.android.apps.youtube", lifecycleScope
+                applicationContext, PackageSpoofUtils.spoofPackageName(packageManager, packageName)!!, lifecycleScope
             ),
             ConnectionInfo().apply { features = FEATURES }
         )
