@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
 
-import androidx.annotation.RequiresPermission;
 import com.google.android.gms.base.BuildConfig;
 import org.microg.gms.common.PackageSpoofUtils;
 import org.microg.gms.common.PackageUtils;
@@ -54,6 +53,7 @@ public class AuthManager {
     public String includeEmail;
     public String includeProfile;
     public boolean isGmsApp;
+    public boolean ignoreStoredPermission = false;
 
     public AuthManager(Context context, String accountName, String packageName, String service) {
         this.context = context;
@@ -285,7 +285,7 @@ public class AuthManager {
                 .itCaveatTypes(itCaveatTypes)
                 .tokenRequestOptions(tokenRequestOptions)
                 .systemPartition(isSystemApp())
-                .hasPermission(isPermitted())
+                .hasPermission(!ignoreStoredPermission && isPermitted())
                 .putDynamicFiledMap(dynamicFields);
         if (isGmsApp) {
             request.appIsGms();
