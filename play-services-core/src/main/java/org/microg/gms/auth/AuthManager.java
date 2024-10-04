@@ -80,6 +80,10 @@ public class AuthManager {
         return account;
     }
 
+    public void setPackageSignature(String packageSignature) {
+        this.packageSignature = packageSignature;
+    }
+
     public String getPackageSignature() {
         if (packageSignature == null)
             packageSignature = PackageUtils.firstSignatureDigest(context, packageName);
