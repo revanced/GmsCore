@@ -114,7 +114,10 @@ android {
         multiDexEnabled true
         multiDexKeepProguard file('multidex-keep.pro')
 
-        manifestPlaceholders = [appLabel:"@string/gms_app_name"]
+        manifestPlaceholders = [
+                appLabel:"@string/gms_app_name",
+                basePackageName: "$basePackageName"
+        ]
         resValue "string", "package_id", basePackageName
 
         buildConfigField "String", "SAFETYNET_KEY", "\"${localProperties.get("safetynet.key", "")}\""
@@ -124,10 +127,6 @@ android {
         buildConfigField "String", "RECAPTCHA_ENTERPRISE_SITE_KEY", "\"${localProperties.get("recaptchaEnterpreise.siteKey", "")}\""
         buildConfigField "String", "RECAPTCHA_ENTERPRISE_API_KEY", "\"${localProperties.get("recaptchaEnterpreise.apiKey", "")}\""
         buildConfigField "String", "BASE_PACKAGE_NAME", "\"$basePackageName\""
-
-        manifestPlaceholders = [
-                basePackageName: "$basePackageName"
-        ]
 
         resValue "string", "base_package_name", "$basePackageName"
         resValue "string", "application_id", "$applicationId"
