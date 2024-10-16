@@ -115,7 +115,7 @@ class AppInviteActivity : AppCompatActivity() {
                         client = ClientIdInfo(
                             platform = ClientPlatform.Android,
                             packageName = Constants.GMS_PACKAGE_NAME,
-                            signature = Constants.GMS_PACKAGE_SIGNATURE_SHA1.decodeHex().base64(),
+                            signature = Constants.GOOGLE_SERVICES_PACKAGE_SIGNATURE_SHA1.decodeHex().base64(),
                             language = Locale.getDefault().language
                         ),
                         link = LinkInfo(
@@ -150,7 +150,7 @@ class ProtobufPostRequest<I : Message<I, *>, O>(url: String, private val i: I, p
         val headers = HashMap(super.getHeaders())
         headers["Accept-Language"] = if (SDK_INT >= 24) LocaleList.getDefault().toLanguageTags() else Locale.getDefault().language
         headers["X-Android-Package"] = Constants.GMS_PACKAGE_NAME
-        headers["X-Android-Cert"] = Constants.GMS_PACKAGE_SIGNATURE_SHA1
+        headers["X-Android-Cert"] = Constants.GOOGLE_SERVICES_PACKAGE_SIGNATURE_SHA1
         return headers
     }
 

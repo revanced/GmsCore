@@ -13,6 +13,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
 
+import com.google.android.gms.base.BuildConfig;
+import org.microg.gms.common.PackageSpoofUtils;
 import org.microg.gms.common.PackageUtils;
 import org.microg.gms.settings.SettingsContract;
 
@@ -272,7 +274,10 @@ public class AuthManager {
         }
         AuthRequest request = new AuthRequest().fromContext(context)
                 .source("android")
-                .app(packageName, getPackageSignature())
+                .app(
+                        PackageSpoofUtils.spoofPackageName(context.getPackageManager(), packageName),
+                        PackageSpoofUtils.spoofStringSignature(context.getPackageManager(), packageName, getPackageSignature())
+                )
                 .email(accountName)
                 .token(getAccountManager().getPassword(account))
                 .service(service)
