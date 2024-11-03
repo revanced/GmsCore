@@ -106,7 +106,7 @@ jobs:
           tag_name: "v${{ env.datetime }}"
           name: "Release ${{ env.datetime }}"
           body: |
-            Automated release GMS Core for Android from actions
+            Automated release GMS Core for Android from actions.
             SHA256 (gmscore): ${{ env.sha256_gmscore }}
             SHA256 (gmscore-huawei): ${{ env.sha256_gmscore_huawei }}
           draft: false
