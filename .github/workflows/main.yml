@@ -1,0 +1,132 @@
+name: AutoBuild & Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: "Release"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout sources"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "Cache Gradle"
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: "Setup Java"
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: "Build APKs"
+        run: ./gradlew --no-daemon :play-services-core:assembleMapboxDefault :play-services-core:assembleMapboxHuawei
+
+      - name: "Rename APKs"
+        run: |
+          mkdir -p play-services-core/build/outputs/apk/releases
+          mv play-services-core/build/outputs/apk/mapboxDefault/release/*.apk play-services-core/build/outputs/apk/releases/gmscore.apk
+          mv play-services-core/build/outputs/apk/mapboxHuawei/release/*.apk play-services-core/build/outputs/apk/releases/gmscore-huawei.apk
+
+      # - name: Sign
+      #   id: sign_apk
+      #   uses: ilharp/sign-android-release@v1
+      #   with:
+      #     releaseDir: play-services-core/build/outputs/apk/releases
+      #     signingKey: ${{ secrets.SIGNING_KEYSTORE }}
+      #     keyAlias: ${{ secrets.SIGNING_KEY_ALIAS }}
+      #     keyStorePassword: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
+      #     keyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
+
+      # - name: Split
+      #   uses: jungwinter/split@v2
+      #   id: signed_files
+      #   with:
+      #     msg: ${{ steps.sign_apk.outputs.signedFiles }}
+      #     separator: ':'
+
+      - name: "Upload APKs as Artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apks
+          path: play-services-core/build/outputs/apk/releases/*.apk
+
+  create_release:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository for tagging
+        uses: actions/checkout@v4
+
+      - name: Get current time
+        id: time
+        run: echo "datetime=$(date -u '+%Y%m%d-%H%M')" >> $GITHUB_ENV
+
+      - name: Create tag
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git tag -a "v${{ env.datetime }}" -m "Release on ${{ env.datetime }}"
+          git push origin "v${{ env.datetime }}"
+
+      - name: Download gmscore.apk artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-apks
+          path: ./artifacts
+
+      - name: Calculate SHA256 for gmscore.apk
+        id: sha256_gmscore
+        run: |
+          sha256=$(sha256sum ./artifacts/gmscore.apk | awk '{print $1}')
+          echo "sha256_gmscore=$sha256" >> $GITHUB_ENV
+
+      - name: Calculate SHA256 for gmscore-huawei.apk
+        id: sha256_gmscore_huawei
+        run: |
+          sha256=$(sha256sum ./artifacts/gmscore-huawei.apk | awk '{print $1}')
+          echo "sha256_gmscore_huawei=$sha256" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2.0.7
+        with:
+          tag_name: "v${{ env.datetime }}"
+          name: "Release ${{ env.datetime }}"
+          body: |
+            Automated release GMS Core for Android from actions
+            SHA256 (gmscore): ${{ env.sha256_gmscore }}
+            SHA256 (gmscore-huawei): ${{ env.sha256_gmscore_huawei }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload gmscore.apk to release
+        uses: softprops/action-gh-release@v2.0.7
+        with:
+          tag_name: "v${{ env.datetime }}"
+          files: ./artifacts/gmscore.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload gmscore-huawei.apk to release
+        uses: softprops/action-gh-release@v2.0.7
+        with:
+          tag_name: "v${{ env.datetime }}"
+          files: ./artifacts/gmscore-huawei.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
